@@ -3,6 +3,8 @@ package ui;
 import model.Board;
 import model.Ground;
 import model.Tile;
+import snake.Snake;
+import snake.SnakeBody;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +15,12 @@ public class Playground extends JPanel {
     private int rows = 15;
     private int cols = 20;
     private Board board;
+    private Snake snake;
 
 
-    public Playground() throws IOException {
+    public Playground(Snake snake) throws IOException {
         this.board = new Board(rows, cols);
+        this.snake = snake;
         setPreferredSize(new Dimension(rows * 32, cols * 32));
     }
 
@@ -30,6 +34,12 @@ public class Playground extends JPanel {
             for(int j=0; j<cols; j++) {
                 g.drawImage(map[i][j].getTileImage(), i * 32, j * 32, 32, 32, null);
             }
+        }
+
+        for(SnakeBody body : snake.toList()) {
+            int x = body.getCoordinates().x();
+            int y = body.getCoordinates().y();
+            g.drawImage(body.getSprite(), x * 32, y * 32, 32, 32, null);
         }
     }
 

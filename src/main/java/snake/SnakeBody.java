@@ -8,11 +8,11 @@ public class SnakeBody {
     private BufferedImage sprite;
     private SnakeBody next;
 
-    public Coordinates getPosition() {
+    public Coordinates getCoordinates() {
         return position;
     }
 
-    public void setPosition(Coordinates position) {
+    public void setCoordinates(Coordinates position) {
         this.position = position;
     }
 

@@ -3,6 +3,8 @@ package snake;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Snake {
 
@@ -31,7 +33,7 @@ public class Snake {
     private void initialize(int size, Coordinates headPosition) {
         SnakeBody head = new SnakeBody();
         head.setSprite(spriteHead);
-        head.setPosition(headPosition);
+        head.setCoordinates(headPosition);
 
         SnakeBody temp = head;
         int remainingLen = size - 1;
@@ -39,18 +41,18 @@ public class Snake {
         while(remainingLen != 0) {
             Coordinates coors;
             if(direction == Direction.UP){
-                coors = new Coordinates(temp.getPosition().x(), temp.getPosition().y() + 1);
+                coors = new Coordinates(temp.getCoordinates().x(), temp.getCoordinates().y() + 1);
             } else if(direction == Direction.DOWN) {
-                coors = new Coordinates(temp.getPosition().x(), temp.getPosition().y() - 1);
+                coors = new Coordinates(temp.getCoordinates().x(), temp.getCoordinates().y() - 1);
             } else if(direction == Direction.LEFT) {
-                coors = new Coordinates(temp.getPosition().x() + 1, temp.getPosition().y());
+                coors = new Coordinates(temp.getCoordinates().x() + 1, temp.getCoordinates().y());
             } else {
-                coors = new Coordinates(temp.getPosition().x() - 1, temp.getPosition().y());
+                coors = new Coordinates(temp.getCoordinates().x() - 1, temp.getCoordinates().y());
             }
 
             SnakeBody body = new SnakeBody();
             body.setSprite(spriteBody);
-            body.setPosition(coors);
+            body.setCoordinates(coors);
 
             temp.setNext(body);
             temp = body;
@@ -64,10 +66,40 @@ public class Snake {
     public void add(Coordinates coordinates) {
         this.head.setSprite(spriteBody);
         SnakeBody head = new SnakeBody();
-        head.setPosition(coordinates);
+        head.setCoordinates(coordinates);
         head.setSprite(spriteHead);
         head.setNext(this.head);
+        this.size++;
         this.head = head;
+    }
+
+    public void moveTo(Coordinates coordinates) {
+        SnakeBody head = this.head;
+        Coordinates newCoordinates = coordinates;
+        while(head != null) {
+            Coordinates oldCoordinates = head.getCoordinates();
+            head.setCoordinates(newCoordinates);
+            newCoordinates = oldCoordinates;
+            head = head.getNext();
+        }
+    }
+
+    public void setDirection(Direction newDirection) {
+        this.direction = newDirection;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public List<SnakeBody> toList() {
+        List<SnakeBody> list = new ArrayList<>(this.size);
+        SnakeBody head = this.head;
+        while(head != null) {
+            list.add(head);
+            head = head.getNext();
+        }
+        return list;
     }
 
     @Override
@@ -75,7 +107,7 @@ public class Snake {
         SnakeBody head = this.head;
         StringBuilder sb = new StringBuilder();
         while(head != null) {
-            sb.append(head.getPosition());
+            sb.append(head.getCoordinates());
             sb.append(",");
             head = head.getNext();
         }

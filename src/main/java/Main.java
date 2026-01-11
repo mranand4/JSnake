@@ -15,59 +15,50 @@ public class Main {
 
     public static void main(String args[]) {
 
-        while(true) {
-            System.out.println("Initialize your snake");
-            System.out.println("Enter snake size");
-            int n = new Scanner(System.in).nextInt();
-            int dir = new Scanner(System.in).nextInt();
-            int x = new Scanner(System.in).nextInt();
-            int y = new Scanner(System.in).nextInt();
+        try {
+            final Coordinates[] initCoords = {new Coordinates(6, 14)};
+            Snake snake = new Snake(3, Direction.UP, initCoords[0]);
+            JFrame frame = new JFrame("JSnake");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Playground ground = new Playground(snake);
+            frame.add(ground);
+            frame.pack();
+            frame.setVisible(true);
+            frame.setResizable(false);
 
-            Direction mDir;
-            if(dir == 8) mDir = Direction.UP;
-            else if(dir == 2) mDir = Direction.DOWN;
-            else if(dir == 4) mDir = Direction.LEFT;
-            else mDir = Direction.RIGHT;
+            Container c = new Container();
 
-            Snake snake = new Snake(n, mDir, new Coordinates(x, y));
-            System.out.print(snake);
+            new Timer(500, e-> {
+                System.out.println("------");
+                System.out.println(snake);
+                double r = Math.random();
+                Coordinates coordinates;
+                if(r > 0.85) {
+                    Direction dir;
+                    if(snake.getDirection() == Direction.DOWN || snake.getDirection() == Direction.UP) {
+                        dir = Math.random() > 0.5 ? Direction.LEFT : Direction.RIGHT;
+                    } else {
+                        dir = Math.random() > 0.5 ? Direction.UP : Direction.DOWN;
+                    }
+                    snake.setDirection(dir);
+                    System.out.println("Changed direction to " + dir);
+                }
 
-            System.out.println("Eat at");
-            x = new Scanner(System.in).nextInt();
-            y = new Scanner(System.in).nextInt();
-            snake.add(new Coordinates(x, y));
-            System.out.println(snake);
+                if(snake.getDirection() == Direction.UP) coordinates = new Coordinates(initCoords[0].x(), initCoords[0].y() - 1);
+                else if(snake.getDirection() == Direction.DOWN) coordinates = new Coordinates(initCoords[0].x(), initCoords[0].y() + 1);
+                else if(snake.getDirection() == Direction.LEFT) coordinates = new Coordinates(initCoords[0].x() - 1, initCoords[0].y());
+                else coordinates = new Coordinates(initCoords[0].x() + 1, initCoords[0].y());
+
+                initCoords[0] = coordinates;
+                snake.moveTo(coordinates);
+                System.out.println(snake);
+                ground.repaint();
+
+            }).start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-//        try {
-//            JFrame frame = new JFrame("JSnake");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            Playground ground = new Playground();
-//            frame.add(ground);
-//            frame.pack();
-//            frame.setVisible(true);
-//            frame.setResizable(false);
-//
-//            Container c = new Container();
-//
-//            new Timer(500, e-> {
-//                int row = c.r;
-//                int col = c.c;
-//                c.incrementRow();
-//
-//                try {
-//                    ground.getBoard().setTile(new Food(), row, col);
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//
-//               ground.repaint();
-//
-//            }).start();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
     }
 }
