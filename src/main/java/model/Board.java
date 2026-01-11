@@ -19,5 +19,13 @@ public class Board {
         return board;
     }
 
+    public void setTile(Tile t, int row, int col) {
+        board[row][col] = t;
+    }
+
+    public Tile getTile(int row, int col) {
+        return board[row][col];
+    }
+
 
 }

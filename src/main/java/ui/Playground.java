@@ -32,4 +32,9 @@ public class Playground extends JPanel {
             }
         }
     }
+
+    public Board getBoard() {
+        return this.board;
+    }
+
 }

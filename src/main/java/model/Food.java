@@ -9,7 +9,7 @@ public class Food extends Tile {
     private BufferedImage tileImg;
 
     public Food() throws IOException {
-        tileImg = ImageIO.read(getClass().getResource("/resources/sprites/food.png"));
+        tileImg = ImageIO.read(getClass().getResource("/sprites/food.png"));
     }
 
     public int getPoints() {
