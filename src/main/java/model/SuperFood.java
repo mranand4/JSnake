@@ -29,7 +29,7 @@ public class SuperFood extends Food {
     }
 
     @Override
-    public BufferedImage getTileImage() {
+    public BufferedImage getImage() {
         return this.tileImg;
     }
 }

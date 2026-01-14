@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Tile {
@@ -16,5 +15,5 @@ public abstract class Tile {
     }
 
     public abstract boolean isCollisible();
-    public abstract BufferedImage getTileImage();
+    public abstract BufferedImage getImage();
 }

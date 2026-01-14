@@ -1,27 +1,26 @@
 package snake;
 
+import model.Position;
+import model.Tile;
+
 import java.awt.image.BufferedImage;
 
-public class SnakeBody {
+public class SnakeBody extends Tile {
 
-    private Coordinates position;
-    private BufferedImage sprite;
+    private Position position;
+    private BufferedImage image;
     private SnakeBody next;
 
-    public Coordinates getCoordinates() {
+    public Position getCoordinates() {
         return position;
     }
 
-    public void setCoordinates(Coordinates position) {
+    public void setCoordinates(Position position) {
         this.position = position;
     }
 
-    public BufferedImage getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(BufferedImage sprite) {
-        this.sprite = sprite;
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
     public SnakeBody getNext() {
@@ -30,5 +29,15 @@ public class SnakeBody {
 
     public void setNext(SnakeBody next) {
         this.next = next;
+    }
+
+    @Override
+    public boolean isCollisible() {
+        return true;
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        return this.image;
     }
 }

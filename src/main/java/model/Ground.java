@@ -18,7 +18,7 @@ public class Ground extends Tile {
     }
 
     @Override
-    public BufferedImage getTileImage() {
+    public BufferedImage getImage() {
         return this.tileImg;
     }
 }
